@@ -1,4 +1,4 @@
-namespace ETStream.Domain.Models
+namespace ETStream.Domain.Aggregates.Media
 {
     public enum MediaContentType
     {
@@ -8,19 +8,16 @@ namespace ETStream.Domain.Models
 
     public class MediaContent
     {
-        private readonly Byte[]? _binaryData = null;
-
-        public Guid Id { get; private set; }
         public MediaContentType Type { get; private set; }
         public int Order { get; set; }
 
+        private readonly Byte[]? _binaryData = null;
         public Byte[]? BinaryData => _binaryData;
 
         protected MediaContent() { }
 
         public MediaContent(Guid id, MediaContentType type)
         {
-            Id = id;
             Type = type;
         }
     }
