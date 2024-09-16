@@ -14,9 +14,9 @@ namespace ETStream.Domain.Seed
 
         public List<INotification> DomainEvents => _domainEvents;
 
-        public Entity()
+        public Entity(Guid? id = null)
         {
-            _id = new Guid();
+            _id = id ?? new Guid();
             _domainEvents = new List<INotification>();
         }
 

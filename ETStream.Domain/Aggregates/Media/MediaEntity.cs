@@ -2,7 +2,7 @@ using ETStream.Domain.Seed;
 
 namespace ETStream.Domain.Aggregates.Media
 {
-    public class Media : Entity
+    public class MediaEntity : Entity
     {
         public MediaType Type { get; private set; }
         public Guid ChannelId { get; private set; }
@@ -10,9 +10,9 @@ namespace ETStream.Domain.Aggregates.Media
         private readonly List<MediaContent> _contents;
         public IReadOnlyCollection<MediaContent> Contents => _contents;
 
-        protected Media() : base() { }
+        protected MediaEntity() : base() { }
 
-        public Media(Guid channelId, MediaType type) : base()
+        public MediaEntity(Guid channelId, MediaType type) : base()
         {
             _contents =  new List<MediaContent>();
             
