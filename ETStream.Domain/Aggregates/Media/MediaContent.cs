@@ -9,7 +9,6 @@ namespace ETStream.Domain.Aggregates.Media
     public class MediaContent
     {
         public MediaContentType Type { get; private set; }
-        public int Order { get; set; }
 
         private readonly Byte[]? _binaryData = null;
         public Byte[]? BinaryData => _binaryData;

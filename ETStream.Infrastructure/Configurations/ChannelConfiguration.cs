@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ETStream.Infrastructure.Configurations
 {
-    public class ChannelEntityTypeConfiguration : IEntityTypeConfiguration<ChannelEntity>
+    public class ChannelConfiguration : IEntityTypeConfiguration<ChannelEntity>
     {
         public void Configure(EntityTypeBuilder<ChannelEntity> channelConfiguration)
         {

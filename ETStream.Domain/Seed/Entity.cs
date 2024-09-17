@@ -6,7 +6,7 @@ namespace ETStream.Domain.Seed
         private Guid _id;
         private readonly List<INotification> _domainEvents;
 
-        public virtual Guid Guid
+        public virtual Guid Id
         {
             get { return _id; }
             protected set { _id = value; }

@@ -10,6 +10,9 @@ namespace ETStream.Domain.Aggregates.Channel
         private readonly List<ChannelPrivilegeGroup> _privilegeGroups;
         public IReadOnlyCollection<ChannelPrivilegeGroup> PrivilegeGroups => _privilegeGroups;
 
+        private readonly List<Member> _members;
+        public IReadOnlyCollection<Member> Members => _members;
+
         protected ChannelEntity() : base() { }
 
         public ChannelEntity(string description, string? about = null) : base()

@@ -4,12 +4,22 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ETStream.Infrastructure.Configurations
 {
-    public class MediaEntityTypeConfiguration : IEntityTypeConfiguration<MediaEntity>
+    public class MediaConfiguration : IEntityTypeConfiguration<MediaEntity>
     {
         public void Configure(EntityTypeBuilder<MediaEntity> mediaConfiguration)
         {
             mediaConfiguration.ToTable("medias");
             mediaConfiguration.Ignore(m => m.DomainEvents);
+
+            mediaConfiguration.OwnsOne(m => m.Type);
+
+            mediaConfiguration.OwnsMany(
+                m => m.Contents, c => 
+                {
+                    c.WithOwner().HasForeignKey("MediaId");
+                    c.Property<Guid>("Id");
+                    c.HasKey("Id");
+                });
         }
     }
 }
