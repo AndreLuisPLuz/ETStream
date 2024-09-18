@@ -12,12 +12,20 @@ namespace ETStream.Domain.Aggregates.Media
 
         protected MediaEntity() : base() { }
 
-        public MediaEntity(Guid channelId, MediaType type) : base()
+        private MediaEntity(
+                MediaType type,
+                Guid channelId,
+                Guid? id = null) : base(id)
         {
             _contents =  new List<MediaContent>();
             
             ChannelId = channelId;
             Type = type;
+        }
+
+        public static MediaEntity CreateNew(MediaType type, Guid channelId)
+        {
+            return new MediaEntity(type, channelId);
         }
     }
 }

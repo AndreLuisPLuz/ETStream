@@ -2,19 +2,21 @@ using ETStream.Domain.Seed;
 
 namespace ETStream.Domain.Aggregates.Channel
 {
-    public class Member : Entity
+    public class Member
     {
-        public string UserId { get; private set; }
+        public Guid UserId { get; private set; }
 
         private readonly List<ChannelPrivilegeGroup> _privilegeGroups;
         public List<ChannelPrivilegeGroup> PrivilegeGroups => _privilegeGroups;
 
-        public Member() : base() { }
+        protected Member() { }
 
-        public Member(string userId) : base()
+        public Member(
+                Guid userId,
+                List<ChannelPrivilegeGroup>? groups = null)
         {
             UserId = userId;
-            _privilegeGroups = new List<ChannelPrivilegeGroup>();
+            _privilegeGroups = groups ?? new List<ChannelPrivilegeGroup>();
         }
     }
 }

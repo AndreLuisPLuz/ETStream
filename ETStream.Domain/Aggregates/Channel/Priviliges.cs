@@ -2,11 +2,11 @@ namespace ETStream.Domain.Aggregates.Channel
 {
     public class Privileges
     {
-        public bool CanPostContent { get; set; }
-        public bool CanEditContent { get; set; }
-        public bool CanDeleteContent { get; set; }
-        public bool CanModerateComments { get; set; }
-        public bool CanEditChannel { get; set; }
-        public bool CanDeleteChannel { get; set; }
+        public required bool CanPostContent { get; set; }
+        public required bool CanEditContent { get; set; }
+        public required bool CanDeleteContent { get; set; }
+        public required bool CanModerateComments { get; set; }
+        public required bool CanEditChannel { get; set; }
+        public required bool CanDeleteChannel { get; set; }
     }
 }

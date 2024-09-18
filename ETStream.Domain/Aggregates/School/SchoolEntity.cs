@@ -8,9 +8,14 @@ namespace ETStream.Domain.Aggregates.School
 
         protected SchoolEntity() { }
 
-        public SchoolEntity(string description)
+        private SchoolEntity(string description, Guid? id = null) : base(id)
         {
             Description = description;
+        }
+
+        public static SchoolEntity CreateNew(string description)
+        {
+            return new SchoolEntity(description);
         }
     }
 }
