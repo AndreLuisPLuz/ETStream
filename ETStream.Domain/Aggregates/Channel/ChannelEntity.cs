@@ -6,6 +6,7 @@ namespace ETStream.Domain.Aggregates.Channel
     {
         public string Description { get; private set; }
         public string? About { get; private set; }
+        public string SchoolId { get; private set; }
 
         private readonly List<ChannelPrivilegeGroup> _privilegeGroups;
         public IReadOnlyCollection<ChannelPrivilegeGroup> PrivilegeGroups => _privilegeGroups;

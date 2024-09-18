@@ -1,23 +1,11 @@
 using ETStream.Domain.Aggregates.School;
 using ETStream.Domain.Seed;
+using ETStream.Infrastructure.Sources;
 
 namespace ETStream.Infrastructure.Repositories
 {
-    public class SqlServerSchoolRepository : IRepository<SchoolEntity>
+    public class SqlServerSchoolRepository : BaseSqlServerRepository<SchoolEntity>
     {
-        public Task<bool> ExistsAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<SchoolEntity> FindByIdAsync(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<SchoolEntity> UpsertAsync(SchoolEntity entity)
-        {
-            throw new NotImplementedException();
-        }
+        public SqlServerSchoolRepository(ETStreamContext context) : base(context) { }
     }
 }
