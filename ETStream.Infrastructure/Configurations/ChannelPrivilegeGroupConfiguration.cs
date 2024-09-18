@@ -12,7 +12,7 @@ namespace ETStream.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<ChannelPrivilegeGroup> privilegeGroupConfiguration)
         {
-            privilegeGroupConfiguration.ToTable("channel_privilege_group");
+            privilegeGroupConfiguration.ToTable("ChannelPrivilegeGroups");
             privilegeGroupConfiguration.Ignore(p => p.DomainEvents);
 
             privilegeGroupConfiguration.OwnsOne(

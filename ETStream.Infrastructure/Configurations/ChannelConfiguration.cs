@@ -8,7 +8,7 @@ namespace ETStream.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<ChannelEntity> channelConfiguration)
         {
-            channelConfiguration.ToTable("channels");
+            channelConfiguration.ToTable("Channels");
             channelConfiguration.Ignore(c => c.DomainEvents);
         }
     }

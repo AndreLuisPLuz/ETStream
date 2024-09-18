@@ -8,7 +8,7 @@ namespace ETStream.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<MediaEntity> mediaConfiguration)
         {
-            mediaConfiguration.ToTable("medias");
+            mediaConfiguration.ToTable("Medias");
             mediaConfiguration.Ignore(m => m.DomainEvents);
 
             mediaConfiguration.OwnsOne(m => m.Type);
@@ -17,8 +17,8 @@ namespace ETStream.Infrastructure.Configurations
                 m => m.Contents, c => 
                 {
                     c.WithOwner().HasForeignKey("MediaId");
-                    c.Property<Guid>("Id");
-                    c.HasKey("Id");
+                    c.Property<int>("ContentNumber").IsRequired();
+                    c.HasKey("Id", "ContentNumber");
                 });
         }
     }

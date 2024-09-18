@@ -8,6 +8,7 @@ namespace ETStream.Domain.Aggregates.Media
 
     public class MediaContent
     {
+        public int ContentNumber { get; private set; }
         public MediaContentType Type { get; private set; }
 
         private readonly Byte[]? _binaryData = null;
@@ -15,8 +16,9 @@ namespace ETStream.Domain.Aggregates.Media
 
         protected MediaContent() { }
 
-        public MediaContent(Guid id, MediaContentType type)
+        public MediaContent(int contentNumber, MediaContentType type)
         {
+            ContentNumber = contentNumber;
             Type = type;
         }
     }

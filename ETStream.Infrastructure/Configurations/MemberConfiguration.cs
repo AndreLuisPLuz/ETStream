@@ -8,7 +8,7 @@ namespace ETStream.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Member> memberConfiguration)
         {
-            memberConfiguration.ToTable("members");
+            memberConfiguration.ToTable("Members");
             memberConfiguration.Ignore(m => m.DomainEvents);
         }
     }

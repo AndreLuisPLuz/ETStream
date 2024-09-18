@@ -8,7 +8,7 @@ namespace ETStream.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<SchoolEntity> schoolConfiguration)
         {
-            schoolConfiguration.ToTable("schools");
+            schoolConfiguration.ToTable("Schools");
             schoolConfiguration.Ignore(s => s.DomainEvents);
         }
     }
