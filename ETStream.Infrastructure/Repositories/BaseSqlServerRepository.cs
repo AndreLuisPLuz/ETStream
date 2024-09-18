@@ -1,22 +1,47 @@
 using ETStream.Domain.Seed;
+using ETStream.Infrastructure.Sources;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace ETStream.Infrastructure.Repositories
 {
-    public abstract class BaseSqlServerRepository<TEntity> : IRepository<TEntity> where TEntity : Entity
+    public abstract class BaseSqlServerRepository<TEntity> : IRepository<TEntity>
+            where TEntity : Entity
     {
-        public Task<bool> ExistsAsync(Guid id)
+        protected readonly ETStreamContext _context;
+        protected readonly DbSet<TEntity> _rootSet;
+
+        public BaseSqlServerRepository(ETStreamContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _rootSet =_context.Set<TEntity>();
         }
 
-        public Task<TEntity> FindByIdAsync(Guid id)
+        public async Task<bool> ExistsAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _rootSet.AnyAsync(e => e.Id.Equals(id));
         }
 
-        public Task<TEntity> UpsertAsync(TEntity entity)
+        public async Task<TEntity?> FindByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _rootSet.SingleOrDefaultAsync(e => e.Id.Equals(id));
+        }
+
+        public async Task<TEntity> UpsertAsync(TEntity entity)
+        {
+            bool entityExists = await _rootSet.AnyAsync(e => e.Id.Equals(entity.Id));
+
+            TEntity? foundEntity = entityExists
+                    ? await _rootSet.SingleOrDefaultAsync(e => e.Id.Equals(entity.Id))
+                    : _rootSet.Add(entity).Entity;
+            
+            if (foundEntity is null)
+                throw new InvalidDataException($"Invalid state for {entity.GetType().FullName} entity. State: {JsonConvert.SerializeObject(entity)}");
+            
+            _context.Entry(foundEntity).CurrentValues.SetValues(foundEntity);
+
+            await _context.SaveChangesAsync();
+            return foundEntity;
         }
     }
 }
