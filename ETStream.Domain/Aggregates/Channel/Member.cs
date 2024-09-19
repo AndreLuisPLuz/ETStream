@@ -5,18 +5,16 @@ namespace ETStream.Domain.Aggregates.Channel
     public class Member
     {
         public Guid UserId { get; private set; }
-
-        private readonly List<ChannelPrivilegeGroup> _privilegeGroups;
-        public List<ChannelPrivilegeGroup> PrivilegeGroups => _privilegeGroups;
+        public Guid ChannelPrivilegeGroupId { get; private set; }
 
         protected Member() { }
 
         public Member(
                 Guid userId,
-                List<ChannelPrivilegeGroup>? groups = null)
+                Guid channelPrivilegeGroupId)
         {
             UserId = userId;
-            _privilegeGroups = groups ?? new List<ChannelPrivilegeGroup>();
+            ChannelPrivilegeGroupId = channelPrivilegeGroupId;
         }
     }
 }

@@ -13,8 +13,9 @@ namespace ETStream.Infrastructure.Sources
         public DbSet<SchoolEntity> Schools { get; set; }
         public DbSet<ChannelEntity> Channels { get; set; }
         public DbSet<ChannelPrivilegeGroup> ChannelPrivilegeGroups { get; set; }
-        public DbSet<Member> Members { get; set; }
         public DbSet<MediaEntity> Medias { get; set; }
+
+        public ETStreamContext(DbContextOptions<ETStreamContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,7 +23,7 @@ namespace ETStream.Infrastructure.Sources
             modelBuilder.ApplyConfiguration(new SchoolConfiguration());
             modelBuilder.ApplyConfiguration(new ChannelConfiguration());
             modelBuilder.ApplyConfiguration(new ChannelPrivilegeGroupConfiguration());
-            modelBuilder.ApplyConfiguration(new MemberConfiguration());
+            modelBuilder.ApplyConfiguration(new MediaConfiguration());
         }
     }
 }
