@@ -7,6 +7,7 @@ namespace ETStream.Domain.Aggregates.User
         public string Username { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
+        
         public Guid SchoolId { get; private set; }
 
         protected UserEntity() : base() { }

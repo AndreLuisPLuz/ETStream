@@ -4,9 +4,10 @@ namespace ETStream.Domain.Aggregates.Channel
 {
     public class ChannelEntity : Entity
     {
-        public Guid SchoolId { get; private set; }
         public string Description { get; private set; }
         public string? About { get; private set; }
+        
+        public Guid SchoolId { get; private set; }
 
         private readonly List<ChannelPrivilegeGroup> _privilegeGroups;
         public IReadOnlyCollection<ChannelPrivilegeGroup> PrivilegeGroups => _privilegeGroups;

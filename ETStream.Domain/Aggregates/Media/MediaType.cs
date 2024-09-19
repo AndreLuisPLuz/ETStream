@@ -1,15 +1,15 @@
 namespace ETStream.Domain.Aggregates.Media
 {
-    public enum Type
+    public enum MediaTypeEnum
     {
-        VIDEO,
+        VIDEO = 1,
         POST
     }
 
     public class MediaType
     {
-        private static readonly MediaType _videoMedia = new(1, nameof(Type.VIDEO));
-        private static readonly MediaType _postMedia = new(2, nameof(Type.POST));
+        private static readonly MediaType _videoMedia = new(1, nameof(MediaTypeEnum.VIDEO));
+        private static readonly MediaType _postMedia = new(2, nameof(MediaTypeEnum.POST));
 
         public int Id { get; private set; }
         public string Description { get; private set; }
@@ -20,12 +20,12 @@ namespace ETStream.Domain.Aggregates.Media
             Description = description;
         }
 
-        public static MediaType GetInstance(Type type)
+        public static MediaType GetInstance(MediaTypeEnum type)
         {
             return type switch
             {
-                Type.VIDEO => _videoMedia,
-                Type.POST => _postMedia,
+                MediaTypeEnum.VIDEO => _videoMedia,
+                MediaTypeEnum.POST => _postMedia,
                 _ => throw new InvalidOperationException($"Invalid enum name {nameof(type)}."),
             };
         }

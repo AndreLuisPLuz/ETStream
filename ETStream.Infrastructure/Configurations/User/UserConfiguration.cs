@@ -3,7 +3,7 @@ using ETStream.Infrastructure.Sources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ETStream.Infrastructure.Configurations
+namespace ETStream.Infrastructure.Configurations.User
 {
     public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
     {

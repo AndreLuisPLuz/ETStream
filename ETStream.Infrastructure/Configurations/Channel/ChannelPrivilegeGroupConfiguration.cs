@@ -6,7 +6,7 @@ using ETStream.Domain.Aggregates.Channel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ETStream.Infrastructure.Configurations
+namespace ETStream.Infrastructure.Configurations.Channel
 {
     public class ChannelPrivilegeGroupConfiguration : IEntityTypeConfiguration<ChannelPrivilegeGroup>
     {

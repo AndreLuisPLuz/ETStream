@@ -1,8 +1,9 @@
+using ETStream.Domain.Aggregates.Channel;
 using ETStream.Domain.Aggregates.School;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ETStream.Infrastructure.Configurations
+namespace ETStream.Infrastructure.Configurations.School
 {
     public class SchoolConfiguration : IEntityTypeConfiguration<SchoolEntity>
     {

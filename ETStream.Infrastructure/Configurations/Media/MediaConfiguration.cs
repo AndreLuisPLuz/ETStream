@@ -2,7 +2,7 @@ using ETStream.Domain.Aggregates.Media;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ETStream.Infrastructure.Configurations
+namespace ETStream.Infrastructure.Configurations.Media
 {
     public class MediaConfiguration : IEntityTypeConfiguration<MediaEntity>
     {
@@ -11,7 +11,14 @@ namespace ETStream.Infrastructure.Configurations
             mediaConfiguration.ToTable("Medias");
             mediaConfiguration.Ignore(m => m.DomainEvents);
 
-            mediaConfiguration.OwnsOne(m => m.Type);
+            mediaConfiguration.Property(m => m.Type)
+                    .HasConversion(
+                        t => t.Id,
+                        t => MediaType.GetInstance((MediaTypeEnum) t)
+                    )
+                    .HasColumnName("Type")
+                    .HasColumnType("tinyint")
+                    .IsRequired();
 
             mediaConfiguration.OwnsMany(
                 m => m.Contents, c => 
