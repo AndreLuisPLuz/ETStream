@@ -16,10 +16,6 @@ namespace ETStream.Infrastructure.Sources
         public DbSet<Member> Members { get; set; }
         public DbSet<MediaEntity> Medias { get; set; }
 
-        public ETStreamContext() { }
-
-        public ETStreamContext(DbContextOptions<ETStreamContext> options) : base(options) { }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
@@ -27,12 +23,6 @@ namespace ETStream.Infrastructure.Sources
             modelBuilder.ApplyConfiguration(new ChannelConfiguration());
             modelBuilder.ApplyConfiguration(new ChannelPrivilegeGroupConfiguration());
             modelBuilder.ApplyConfiguration(new MemberConfiguration());
-            modelBuilder.ApplyConfiguration(new MediaConfiguration());
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            
         }
     }
 }

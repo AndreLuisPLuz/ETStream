@@ -10,6 +10,14 @@ namespace ETStream.Infrastructure.Configurations
         {
             channelConfiguration.ToTable("Channels");
             channelConfiguration.Ignore(c => c.DomainEvents);
+
+            channelConfiguration.OwnsMany(
+                c => c.Members, m =>
+                {
+                    m.WithOwner().HasForeignKey("ChannelId");
+                    m.Property<Guid>("UserId").IsRequired();
+                    m.HasKey("ChannelId", "UserId");
+                });
         }
     }
 }

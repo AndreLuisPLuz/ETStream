@@ -18,7 +18,7 @@ namespace ETStream.Infrastructure.Configurations
                 {
                     c.WithOwner().HasForeignKey("MediaId");
                     c.Property<int>("ContentNumber").IsRequired();
-                    c.HasKey("Id", "ContentNumber");
+                    c.HasKey("MediaId", "ContentNumber");
                 });
         }
     }
