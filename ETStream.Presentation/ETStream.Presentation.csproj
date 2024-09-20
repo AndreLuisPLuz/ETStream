@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ETStream.Infrastructure\ETStream.Infrastructure.csproj" />
+    <ProjectReference Include="..\ETStream.Application\ETStream.Application.csproj" />
   </ItemGroup>
 
 </Project>
