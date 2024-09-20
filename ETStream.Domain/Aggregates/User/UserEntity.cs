@@ -4,7 +4,9 @@ namespace ETStream.Domain.Aggregates.User
 {
     public class UserEntity : Entity
     {
-        public string Username { get; private set; }
+        private readonly Name _username;
+
+        public string Username => _username.Value;
         public string Email { get; private set; }
         public string Password { get; private set; }
         
@@ -19,7 +21,7 @@ namespace ETStream.Domain.Aggregates.User
                 Guid schoolId,
                 Guid? id = null) : base(id)
         {
-            Username = username;
+            _username = Name.Create(username);
             Email = email;
             Password = password;
             SchoolId = schoolId;
@@ -29,8 +31,8 @@ namespace ETStream.Domain.Aggregates.User
                 string username,
                 string email,
                 string password,
-                Guid schoolId
-        ) {
+                Guid schoolId)
+        {
             return new UserEntity(username, email, password, schoolId);
         }
     }

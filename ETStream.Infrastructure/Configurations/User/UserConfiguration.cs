@@ -1,3 +1,4 @@
+using ETStream.Domain.Aggregates.School;
 using ETStream.Domain.Aggregates.User;
 using ETStream.Infrastructure.Sources;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,11 @@ namespace ETStream.Infrastructure.Configurations.User
         {
             userConfiguration.ToTable("Users");
             userConfiguration.Ignore(u => u.DomainEvents);
+
+            userConfiguration.HasOne<SchoolEntity>()
+                    .WithMany()
+                    .HasForeignKey(u => u.SchoolId)
+                    .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
