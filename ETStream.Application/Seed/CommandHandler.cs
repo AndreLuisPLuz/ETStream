@@ -1,7 +1,7 @@
 namespace ETStream.Application.Seed
 {
-    interface ICommandHandler<TResult, TCommand> where TCommand : Command<Object>
+    interface ICommandHandler<TResult, TProperties>
     {
-        Task<TResult> HandleAsync(TCommand command);
+        Task<TResult> HandleAsync(Command<TProperties> command);
     }
 }
