@@ -7,7 +7,7 @@ namespace ETStream.Application.Seed
 
         protected Command(TProperties props)
         {
-            CommandId = new Guid();
+            CommandId = Guid.NewGuid();
             Properties = props;
         }
     }

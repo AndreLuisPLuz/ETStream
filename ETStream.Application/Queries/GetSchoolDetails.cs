@@ -4,7 +4,7 @@ namespace ETStream.Application.Queries
 {
     public readonly record struct GetSchoolDetailsProps
     {
-        public required readonly string SchoolId { get; init; }
+        public required readonly Guid SchoolId { get; init; }
     }
 
     public readonly record struct SchoolDetails
@@ -12,7 +12,7 @@ namespace ETStream.Application.Queries
         public readonly string Description { get; init; }
     }
 
-    public class GetSchoolDetails : Query<GetSchoolDetailsProps, SchoolDetails>
+    public class GetSchoolDetails : Query<GetSchoolDetailsProps, SchoolDetails?>
     {
         public GetSchoolDetails(GetSchoolDetailsProps props) : base(props)
         {

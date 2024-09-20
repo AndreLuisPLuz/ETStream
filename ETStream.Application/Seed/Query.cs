@@ -7,7 +7,7 @@ namespace ETStream.Application.Seed
 
         public Query(TProperties props)
         {
-            QueryId = new Guid();
+            QueryId = Guid.NewGuid();
             Properties = props;
         }
     }

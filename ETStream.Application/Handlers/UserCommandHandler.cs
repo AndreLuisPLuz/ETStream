@@ -18,10 +18,10 @@ namespace ETStream.Application.Handlers
         {
             var props = command.Properties;
             var newUser = UserEntity.CreateNew(
-                username: props.Username,
-                email: props.Email,
-                password: props.Password,
-                schoolId: new Guid(props.SchoolId));
+                    username: props.Username,
+                    email: props.Email,
+                    password: props.Password,
+                    schoolId: props.SchoolId);
 
             var savedUser = await _repository.UpsertAsync(newUser);
 

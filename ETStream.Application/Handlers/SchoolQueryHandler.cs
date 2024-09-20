@@ -16,7 +16,7 @@ namespace ETStream.Application.Handlers
 
         public async Task<SchoolDetails?> HandleAsync(Query<GetSchoolDetailsProps, SchoolDetails?> query)
         {
-            var school = await _repository.FindByIdAsync(new Guid(query.Properties.SchoolId));
+            var school = await _repository.FindByIdAsync(query.Properties.SchoolId);
             
             if (school is null)
                 return null;

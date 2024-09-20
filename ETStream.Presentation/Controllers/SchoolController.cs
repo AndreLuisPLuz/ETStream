@@ -1,5 +1,7 @@
 using ETStream.Application.Commands;
 using ETStream.Application.Handlers;
+using ETStream.Application.Queries;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ETStream.Presentation.Controllers
@@ -10,16 +12,24 @@ namespace ETStream.Presentation.Controllers
     {
         [HttpPost]
         public async Task<ActionResult> CreateSchool(
-                [FromServices] SchoolCommandHandler handler,
+                [FromServices] SchoolCommandHandler commandHandler,
+                [FromServices] SchoolQueryHandler queryHandler,
                 [FromBody] CreateSchoolCommandProperties payload)
         {
             var command = new CreateSchoolCommand(payload);
-            var schoolId = await handler.HandleAsync(command);
+            var schoolId = await commandHandler.HandleAsync(command);
 
             if (schoolId is null)
                 return BadRequest();
             
-            return Created();
+            var query = new GetSchoolDetails(new()
+            {
+                SchoolId = schoolId.Value
+            });
+
+            var result = await queryHandler.HandleAsync(query);
+
+            return Ok();
         }
     }
 }
