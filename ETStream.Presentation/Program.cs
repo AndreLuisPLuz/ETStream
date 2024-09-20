@@ -1,3 +1,4 @@
+using ETStream.Domain.Aggregates.School;
 using ETStream.Domain.Aggregates.User;
 using ETStream.Domain.Seed;
 using ETStream.Infrastructure.Repositories;
@@ -39,7 +40,8 @@ namespace ETStream.Presentation
                 options => options.UseSqlServer(connectionString)
             );
 
-            services.AddScoped(typeof(IRepository<UserEntity>), typeof(BaseSqlServerRepository<UserEntity>));
+            services.AddScoped(typeof(IRepository<UserEntity>), typeof(SqlServerRepository<UserEntity>));
+            services.AddScoped(typeof(IRepository<SchoolEntity>), typeof(SqlServerRepository<SchoolEntity>));
 
             services.AddControllers();
 

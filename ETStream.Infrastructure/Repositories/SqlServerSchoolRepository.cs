@@ -4,7 +4,7 @@ using ETStream.Infrastructure.Sources;
 
 namespace ETStream.Infrastructure.Repositories
 {
-    public class SqlServerSchoolRepository : BaseSqlServerRepository<SchoolEntity>
+    public class SqlServerSchoolRepository : SqlServerRepository<SchoolEntity>
     {
         public SqlServerSchoolRepository(ETStreamContext context) : base(context) { }
     }

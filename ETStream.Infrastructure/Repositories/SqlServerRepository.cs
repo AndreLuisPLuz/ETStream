@@ -5,13 +5,13 @@ using Newtonsoft.Json;
 
 namespace ETStream.Infrastructure.Repositories
 {
-    public abstract class BaseSqlServerRepository<TEntity> : IRepository<TEntity>
+    public class SqlServerRepository<TEntity> : IRepository<TEntity>
             where TEntity : Entity
     {
         protected readonly ETStreamContext _context;
         protected readonly DbSet<TEntity> _rootSet;
 
-        public BaseSqlServerRepository(ETStreamContext context)
+        public SqlServerRepository(ETStreamContext context)
         {
             _context = context;
             _rootSet =_context.Set<TEntity>();
