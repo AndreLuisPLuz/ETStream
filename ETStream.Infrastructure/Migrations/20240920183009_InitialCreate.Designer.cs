@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETStream.Infrastructure.Migrations
 {
     [DbContext(typeof(ETStreamContext))]
-    [Migration("20240919170146_InitialCreate")]
+    [Migration("20240920183009_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -43,6 +43,8 @@ namespace ETStream.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("SchoolId");
+
                     b.ToTable("Channels", (string)null);
                 });
 
@@ -52,7 +54,7 @@ namespace ETStream.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ChannelEntityId")
+                    b.Property<Guid?>("ChannelId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
@@ -61,7 +63,7 @@ namespace ETStream.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChannelEntityId");
+                    b.HasIndex("ChannelId");
 
                     b.ToTable("ChannelPrivilegeGroups", (string)null);
                 });
@@ -74,6 +76,10 @@ namespace ETStream.Infrastructure.Migrations
 
                     b.Property<Guid>("ChannelId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("tinyint")
+                        .HasColumnName("Type");
 
                     b.HasKey("Id");
 
@@ -112,17 +118,21 @@ namespace ETStream.Infrastructure.Migrations
                     b.Property<Guid>("SchoolId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("SchoolId");
 
                     b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("ETStream.Domain.Aggregates.Channel.ChannelEntity", b =>
                 {
+                    b.HasOne("ETStream.Domain.Aggregates.School.SchoolEntity", null)
+                        .WithMany()
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsMany("ETStream.Domain.Aggregates.Channel.Member", "Members", b1 =>
                         {
                             b1.Property<Guid>("ChannelId")
@@ -137,10 +147,18 @@ namespace ETStream.Infrastructure.Migrations
 
                             b1.HasKey("ChannelId", "UserId");
 
+                            b1.HasIndex("ChannelPrivilegeGroupId");
+
                             b1.ToTable("Member");
 
                             b1.WithOwner()
                                 .HasForeignKey("ChannelId");
+
+                            b1.HasOne("ETStream.Domain.Aggregates.Channel.ChannelPrivilegeGroup", null)
+                                .WithMany()
+                                .HasForeignKey("ChannelPrivilegeGroupId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
                         });
 
                     b.Navigation("Members");
@@ -150,7 +168,7 @@ namespace ETStream.Infrastructure.Migrations
                 {
                     b.HasOne("ETStream.Domain.Aggregates.Channel.ChannelEntity", null)
                         .WithMany("PrivilegeGroups")
-                        .HasForeignKey("ChannelEntityId");
+                        .HasForeignKey("ChannelId");
 
                     b.OwnsOne("ETStream.Domain.Aggregates.Channel.Privileges", "Privileges", b1 =>
                         {
@@ -191,26 +209,6 @@ namespace ETStream.Infrastructure.Migrations
 
             modelBuilder.Entity("ETStream.Domain.Aggregates.Media.MediaEntity", b =>
                 {
-                    b.OwnsOne("ETStream.Domain.Aggregates.Media.MediaType", "Type", b1 =>
-                        {
-                            b1.Property<Guid>("MediaEntityId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Description")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<int>("Id")
-                                .HasColumnType("int");
-
-                            b1.HasKey("MediaEntityId");
-
-                            b1.ToTable("Medias");
-
-                            b1.WithOwner()
-                                .HasForeignKey("MediaEntityId");
-                        });
-
                     b.OwnsMany("ETStream.Domain.Aggregates.Media.MediaContent", "Contents", b1 =>
                         {
                             b1.Property<Guid>("MediaId")
@@ -234,8 +232,14 @@ namespace ETStream.Infrastructure.Migrations
                         });
 
                     b.Navigation("Contents");
+                });
 
-                    b.Navigation("Type")
+            modelBuilder.Entity("ETStream.Domain.Aggregates.User.UserEntity", b =>
+                {
+                    b.HasOne("ETStream.Domain.Aggregates.School.SchoolEntity", null)
+                        .WithMany()
+                        .HasForeignKey("SchoolId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

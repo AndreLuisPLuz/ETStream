@@ -4,6 +4,7 @@ using ETStream.Domain.Aggregates.User;
 using ETStream.Domain.Seed;
 using ETStream.Infrastructure.Repositories;
 using ETStream.Infrastructure.Sources;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETStream.Presentation
@@ -37,6 +38,7 @@ namespace ETStream.Presentation
         private static void ConfigureServices(IServiceCollection services, IConfigurationManager configuration)
         {
             var connectionString = configuration.GetConnectionString("SqlServer");
+            Console.WriteLine(connectionString);
             services.AddDbContext<ETStreamContext>(
                 options => options.UseSqlServer(connectionString)
             );
@@ -44,7 +46,7 @@ namespace ETStream.Presentation
             services.AddScoped<IRepository<UserEntity>, SqlServerRepository<UserEntity>>();
             services.AddScoped<IRepository<SchoolEntity>, SqlServerRepository<SchoolEntity>>();
 
-            services.AddSingleton<SchoolCommandHandler, SchoolCommandHandler>();
+            services.AddScoped<SchoolCommandHandler>();
 
             services.AddControllers();
 

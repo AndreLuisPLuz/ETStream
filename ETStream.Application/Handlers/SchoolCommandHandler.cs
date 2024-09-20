@@ -7,7 +7,7 @@ namespace ETStream.Application.Handlers
 {
     public class SchoolCommandHandler : ICommandHandler<Guid?, CreateSchoolCommandProperties>
     {
-        private IRepository<SchoolEntity> _repository;
+        private readonly IRepository<SchoolEntity> _repository;
 
         public SchoolCommandHandler(IRepository<SchoolEntity> repository)
         {

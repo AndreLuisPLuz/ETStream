@@ -1,4 +1,5 @@
 using ETStream.Domain.Aggregates.Media;
+using ETStream.Domain.Aggregates.School;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,6 +20,11 @@ namespace ETStream.Infrastructure.Configurations.Media
                     .HasColumnName("Type")
                     .HasColumnType("tinyint")
                     .IsRequired();
+            
+            mediaConfiguration.HasOne<SchoolEntity>()
+                    .WithMany()
+                    .HasForeignKey(m => m.ChannelId)
+                    .OnDelete(DeleteBehavior.Cascade);
 
             mediaConfiguration.OwnsMany(
                 m => m.Contents, c => 

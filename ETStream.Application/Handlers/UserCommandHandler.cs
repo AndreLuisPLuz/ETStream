@@ -7,7 +7,7 @@ namespace ETStream.Application.Handlers
 {
     public class UserCommandHandler : ICommandHandler<Guid?, CreateUserCommandProperties>
     {
-        private IRepository<UserEntity> _repository;
+        private readonly IRepository<UserEntity> _repository;
 
         public UserCommandHandler(IRepository<UserEntity> repository)
         {
