@@ -2,7 +2,10 @@ using ETStream.Domain.Aggregates.Channel;
 using ETStream.Domain.Aggregates.Media;
 using ETStream.Domain.Aggregates.School;
 using ETStream.Domain.Aggregates.User;
-using ETStream.Infrastructure.Configurations;
+using ETStream.Infrastructure.Configurations.Channel;
+using ETStream.Infrastructure.Configurations.Media;
+using ETStream.Infrastructure.Configurations.School;
+using ETStream.Infrastructure.Configurations.User;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETStream.Infrastructure.Sources
