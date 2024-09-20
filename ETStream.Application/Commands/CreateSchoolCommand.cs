@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using ETStream.Application.Seed;
 
 namespace ETStream.Application.Commands
