@@ -1,3 +1,6 @@
+using ETStream.Domain.Aggregates.User;
+using ETStream.Domain.Seed;
+using ETStream.Infrastructure.Repositories;
 using ETStream.Infrastructure.Sources;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,10 +35,11 @@ namespace ETStream.Presentation
         private static void ConfigureServices(IServiceCollection services, IConfigurationManager configuration)
         {
             var connectionString = configuration.GetConnectionString("SqlServer");
-
             services.AddDbContext<ETStreamContext>(
                 options => options.UseSqlServer(connectionString)
             );
+
+            services.AddScoped(typeof(IRepository<UserEntity>), typeof(BaseSqlServerRepository<UserEntity>));
 
             services.AddControllers();
 
