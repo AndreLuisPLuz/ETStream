@@ -1,4 +1,4 @@
-using ETStream.Domain.Seed;
+ using ETStream.Domain.Seed;
 
 namespace ETStream.Domain.Aggregates.Media
 {
