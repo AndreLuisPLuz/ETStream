@@ -1,3 +1,4 @@
+using ETStream.Application.Errors;
 using ETStream.Application.Queries;
 using ETStream.Application.Seed;
 using ETStream.Domain.Aggregates.School;
@@ -21,12 +22,11 @@ namespace ETStream.Application.Handlers
 
         public async Task<UserDetails?> HandleAsync(Query<GetUserDetailsProps, UserDetails?> query)
         {
-            var user = await _repository.FindByIdAsync(query.Properties.UserId);
+            var user = await _repository.FindByIdAsync(query.Properties.UserId)
+                    ?? throw new NotFoundException("User not found.");
 
-            if (user is null)
-                return null;
-
-            var school = await _schoolRepository.FindByIdAsync(user.SchoolId);
+            var school = await _schoolRepository.FindByIdAsync(user.SchoolId)
+                    ?? throw new NotFoundException("School not found.");
             
             return new UserDetails
             {
@@ -34,7 +34,7 @@ namespace ETStream.Application.Handlers
                 Username = user.Username,
                 School = new SchoolDetails
                 {
-                    Description = school!.Description,
+                    Description = school.Description,
                 }
             };
         }

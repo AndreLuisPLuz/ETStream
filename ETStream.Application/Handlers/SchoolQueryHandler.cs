@@ -1,3 +1,4 @@
+using ETStream.Application.Errors;
 using ETStream.Application.Queries;
 using ETStream.Application.Seed;
 using ETStream.Domain.Aggregates.School;
@@ -5,7 +6,7 @@ using ETStream.Domain.Seed;
 
 namespace ETStream.Application.Handlers
 {
-    public class SchoolQueryHandler : IQueryHandler<SchoolDetails?, GetSchoolDetailsProps>
+    public class SchoolQueryHandler : IQueryHandler<SchoolDetails, GetSchoolDetailsProps>
     {
         private IRepository<SchoolEntity> _repository;
 
@@ -14,12 +15,10 @@ namespace ETStream.Application.Handlers
             _repository = repository;
         }
 
-        public async Task<SchoolDetails?> HandleAsync(Query<GetSchoolDetailsProps, SchoolDetails?> query)
+        public async Task<SchoolDetails> HandleAsync(Query<GetSchoolDetailsProps, SchoolDetails> query)
         {
-            var school = await _repository.FindByIdAsync(query.Properties.SchoolId);
-            
-            if (school is null)
-                return null;
+            var school = await _repository.FindByIdAsync(query.Properties.SchoolId)
+                    ?? throw new NotFoundException("School not found.");
             
             return new SchoolDetails
             {

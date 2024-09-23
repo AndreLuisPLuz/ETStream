@@ -1,4 +1,5 @@
 using ETStream.Application.Commands;
+using ETStream.Application.Errors;
 using ETStream.Application.Seed;
 using ETStream.Domain.Aggregates.School;
 using ETStream.Domain.Aggregates.User;
@@ -23,8 +24,10 @@ namespace ETStream.Application.Handlers
         {
             var props = command.Properties;
 
-            var school = _schoolRepo.FindByIdAsync(props.SchoolId) 
-                    ?? throw new Exception("School not found.");
+            var schoolExists = await _schoolRepo.ExistsAsync(props.SchoolId);
+
+            if (!schoolExists)
+                throw new NotFoundException("School not found.");
 
             var newUser = UserEntity.CreateNew(
                     username: props.Username,
@@ -32,9 +35,10 @@ namespace ETStream.Application.Handlers
                     password: props.Password,
                     schoolId: props.SchoolId);
 
-            var savedUser = await _repo.UpsertAsync(newUser);
+            var savedUser = await _repo.UpsertAsync(newUser)
+                    ?? throw new UpsertFailException("Could not save user.");
 
-            return savedUser?.Id ?? null;
+            return savedUser.Id;
         }
     }
 }
