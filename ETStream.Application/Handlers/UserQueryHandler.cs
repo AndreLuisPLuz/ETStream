@@ -7,7 +7,7 @@ using ETStream.Domain.Seed;
 
 namespace ETStream.Application.Handlers
 {
-    public class UserQueryHandler : IQueryHandler<UserDetails?, GetUserDetailsProps>
+    public class UserQueryHandler : IQueryHandler<UserDetails, GetUserDetailsProps>
     {
         private readonly IRepository<UserEntity> _repository;
         private readonly IRepository<SchoolEntity> _schoolRepository;
@@ -20,7 +20,7 @@ namespace ETStream.Application.Handlers
             _schoolRepository = schoolRepository;
         }
 
-        public async Task<UserDetails?> HandleAsync(Query<GetUserDetailsProps, UserDetails?> query)
+        public async Task<UserDetails> HandleAsync(Query<GetUserDetailsProps, UserDetails> query)
         {
             var user = await _repository.FindByIdAsync(query.Properties.UserId)
                     ?? throw new NotFoundException("User not found.");

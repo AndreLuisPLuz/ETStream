@@ -12,7 +12,7 @@ namespace ETStream.Application.Queries
         public readonly string Description { get; init; }
     }
 
-    public class GetSchoolDetails : Query<GetSchoolDetailsProps, SchoolDetails?>
+    public class GetSchoolDetails : Query<GetSchoolDetailsProps, SchoolDetails>
     {
         public GetSchoolDetails(GetSchoolDetailsProps props) : base(props)
         {

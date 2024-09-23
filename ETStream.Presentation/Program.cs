@@ -47,6 +47,7 @@ namespace ETStream.Presentation
             services.AddScoped<IRepository<SchoolEntity>, SqlServerRepository<SchoolEntity>>();
 
             services.AddScoped<SchoolCommandHandler>();
+            services.AddScoped<UserCommandHandler>();
 
             services.AddControllers();
 

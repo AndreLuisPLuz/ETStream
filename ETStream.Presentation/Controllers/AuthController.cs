@@ -10,22 +10,18 @@ namespace ETStream.Presentation.Controllers
     public class AuthController : Controller
     {
         [HttpPost]
-        public async Task<ActionResult> RegisterUser(
+        public async Task<IActionResult> RegisterUser(
                 [FromServices] UserCommandHandler userCommandHandler,
                 [FromServices] UserQueryHandler userQueryHandler,
                 [FromBody] CreateUserProperties payload)
         {
-            var userId = await userCommandHandler.HandleAsync(
-                new CreateUser(payload));
-            
-            if (userId is null)
-                return BadRequest();
-            
-            var query = new GetUserDetails(new()
+            var userId = await userCommandHandler.HandleAsync(new CreateUser(payload));
+            var result = await userQueryHandler.HandleAsync(new GetUserDetails(new()
             {
                 UserId = userId!.Value
-            });
-            var result = await userQueryHandler.HandleAsync(query!);
+            }));
+
+            return Json(result);
         }
     }
 }

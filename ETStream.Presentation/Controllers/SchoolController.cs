@@ -11,25 +11,18 @@ namespace ETStream.Presentation.Controllers
     public class SchoolController : Controller
     {
         [HttpPost]
-        public async Task<ActionResult> CreateSchool(
+        public async Task<IActionResult> CreateSchool(
                 [FromServices] SchoolCommandHandler commandHandler,
                 [FromServices] SchoolQueryHandler queryHandler,
                 [FromBody] CreateSchoolProperties payload)
         {
-            var command = new CreateSchool(payload);
-            var schoolId = await commandHandler.HandleAsync(command);
-
-            if (schoolId is null)
-                return BadRequest();
-            
-            var query = new GetSchoolDetails(new()
+            var schoolId = await commandHandler.HandleAsync(new CreateSchool(payload));
+            var result = await queryHandler.HandleAsync(new GetSchoolDetails(new()
             {
-                SchoolId = schoolId.Value
-            });
+                SchoolId = schoolId
+            }));
 
-            var result = await queryHandler.HandleAsync(query);
-
-            return Ok();
+            return Json(result);
         }
     }
 }
