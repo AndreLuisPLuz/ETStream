@@ -5,7 +5,7 @@ using ETStream.Domain.Seed;
 
 namespace ETStream.Application.Handlers
 {
-    public class UserCommandHandler : ICommandHandler<Guid?, CreateUserCommandProperties>
+    public class UserCommandHandler : ICommandHandler<Guid?, CreateUserProperties>
     {
         private readonly IRepository<UserEntity> _repository;
 
@@ -14,7 +14,7 @@ namespace ETStream.Application.Handlers
             _repository = repository;
         }
 
-        public async Task<Guid?> HandleAsync(Command<CreateUserCommandProperties> command)
+        public async Task<Guid?> HandleAsync(Command<CreateUserProperties> command)
         {
             var props = command.Properties;
             var newUser = UserEntity.CreateNew(

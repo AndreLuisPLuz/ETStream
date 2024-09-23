@@ -5,7 +5,7 @@ using ETStream.Domain.Seed;
 
 namespace ETStream.Application.Handlers
 {
-    public class SchoolCommandHandler : ICommandHandler<Guid?, CreateSchoolCommandProperties>
+    public class SchoolCommandHandler : ICommandHandler<Guid?, CreateSchoolProperties>
     {
         private readonly IRepository<SchoolEntity> _repository;
 
@@ -14,7 +14,7 @@ namespace ETStream.Application.Handlers
             _repository = repository;
         }
 
-        public async Task<Guid?> HandleAsync(Command<CreateSchoolCommandProperties> command)
+        public async Task<Guid?> HandleAsync(Command<CreateSchoolProperties> command)
         {
             var newSchool = SchoolEntity.CreateNew(command.Properties.Description);
             var savedSchool = await _repository.UpsertAsync(newSchool);

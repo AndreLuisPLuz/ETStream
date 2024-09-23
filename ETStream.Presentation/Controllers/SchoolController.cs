@@ -14,9 +14,9 @@ namespace ETStream.Presentation.Controllers
         public async Task<ActionResult> CreateSchool(
                 [FromServices] SchoolCommandHandler commandHandler,
                 [FromServices] SchoolQueryHandler queryHandler,
-                [FromBody] CreateSchoolCommandProperties payload)
+                [FromBody] CreateSchoolProperties payload)
         {
-            var command = new CreateSchoolCommand(payload);
+            var command = new CreateSchool(payload);
             var schoolId = await commandHandler.HandleAsync(command);
 
             if (schoolId is null)
