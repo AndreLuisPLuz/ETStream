@@ -4,13 +4,26 @@ namespace ETStream.Domain.Aggregates.User
 {
     public class UserEntity : Entity
     {
-        public NameValue Username { get; set; }
-        public PasswordValue Password { get; set; }
+        private NameValue _username;
+        private PasswordValue _password;
+
+        public string Username
+        {
+            get => _username.Value;
+            set => _username = NameValue.Create(value);
+        }
+
+        public string Password
+        {
+            get => _password.Value;
+            set => _password = PasswordValue.Load(value);
+        }
+
         public string Email { get; private set; }
         
         public Guid SchoolId { get; private set; }
 
-        protected UserEntity() : base() { }
+        protected UserEntity() : base() {}
 
         private UserEntity(
                 string username,
@@ -21,16 +34,11 @@ namespace ETStream.Domain.Aggregates.User
         {
             Email = email;
             SchoolId = schoolId;
-            Username = NameValue.Create(username);
 
-            if (id is null)
-            {
-                Password = PasswordValue.CreateForUser(this, password);
-            }
-            else
-            {
-                Password = PasswordValue.Load(password);
-            }
+            _username = NameValue.Create(username);
+            _password = (id is null)
+                ? PasswordValue.CreateForUser(this, password)
+                : PasswordValue.Load(password);
         }
 
         public static UserEntity CreateNew(
@@ -54,7 +62,7 @@ namespace ETStream.Domain.Aggregates.User
 
         public PasswordVerification VerifyPassword(string password)
         {
-            return Password.VerifyAgainst(this, password);
+            return _password.VerifyAgainst(this, password);
         }
     }
 }

@@ -13,16 +13,6 @@ namespace ETStream.Infrastructure.Configurations.User
             userConfiguration.ToTable("Users");
             userConfiguration.Ignore(u => u.DomainEvents);
 
-            userConfiguration.Property(u => u.Password)
-                    .HasConversion(
-                        p => p.Value,
-                        p => PasswordValue.Load(p));
-            
-            userConfiguration.Property(u => u.Username)
-                    .HasConversion(
-                        n => n.Value,
-                        n => NameValue.Create(n));
-
             userConfiguration.HasOne<SchoolEntity>()
                     .WithMany()
                     .HasForeignKey(u => u.SchoolId)
