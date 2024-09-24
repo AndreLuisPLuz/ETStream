@@ -32,7 +32,7 @@ namespace ETStream.Application.Handlers
             {
                 Id = user.Id,
                 Email = user.Email,
-                Username = user.Username,
+                Username = user.Username.Value,
                 School = new SchoolDetails
                 {
                     Id = school.Id,

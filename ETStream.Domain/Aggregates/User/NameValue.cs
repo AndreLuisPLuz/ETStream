@@ -1,17 +1,17 @@
 namespace ETStream.Domain.Aggregates.User
 {
-    public class Name
+    public class NameValue
     {
         public string Value { get; private set; }
 
-        private Name(string name)
+        private NameValue(string name)
         {
             Value = name;
         }
 
-        public static Name Create(string name)
+        public static NameValue Create(string name)
         {
-            return new Name(name);
+            return new NameValue(name);
         }
     }
 }

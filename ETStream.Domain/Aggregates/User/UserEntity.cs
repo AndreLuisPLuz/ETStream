@@ -4,7 +4,7 @@ namespace ETStream.Domain.Aggregates.User
 {
     public class UserEntity : Entity
     {
-        public Name Username { get; set; }
+        public NameValue Username { get; set; }
         public PasswordValue Password { get; set; }
         public string Email { get; private set; }
         
@@ -21,7 +21,7 @@ namespace ETStream.Domain.Aggregates.User
         {
             Email = email;
             SchoolId = schoolId;
-            Username = Name.Create(username);
+            Username = NameValue.Create(username);
 
             if (id is null)
             {
