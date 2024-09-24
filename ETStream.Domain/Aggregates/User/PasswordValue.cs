@@ -25,14 +25,14 @@ namespace ETStream.Domain.Aggregates.User
             return new PasswordValue(password);
         }
 
-        public PasswordVerification VerifyAgainst(UserEntity user, string rawPassword)
+        public bool MatchesAgainst(UserEntity user, string rawPassword)
         {
             var verificationResult = _passwordHasher.VerifyHashedPassword(user, _value, rawPassword);
             
             return verificationResult switch
             {
-                PasswordVerificationResult.Success => new PasswordVerification.Succeeded(user.Id),
-                _ => new PasswordVerification.Failed(),
+                PasswordVerificationResult.Success => true,
+                _ => false,
             };
         }
     }

@@ -3,17 +3,20 @@ using ETStream.Application.Errors;
 using ETStream.Application.Seed;
 using ETStream.Domain.Aggregates.School;
 using ETStream.Domain.Aggregates.User;
+using ETStream.Domain.Contracts;
 using ETStream.Domain.Seed;
 
 namespace ETStream.Application.Handlers
 {
-    public class UserCommandHandler : ICommandHandler<Guid?, CreateUserProperties>
+    public class UserCommandHandler :
+            ICommandHandler<Guid?, CreateUserProperties>,
+            ICommandHandler<string, AuthenticateUser>
     {
-        private readonly IRepository<UserEntity> _repo;
+        private readonly IUserRepository _repo;
         private readonly IRepository<SchoolEntity> _schoolRepo;
 
         public UserCommandHandler(
-                IRepository<UserEntity> repository,
+                IUserRepository repository,
                 IRepository<SchoolEntity> schoolRepository)
         {
             _repo = repository;
@@ -39,6 +42,13 @@ namespace ETStream.Application.Handlers
                     ?? throw new UpsertFailException("Could not save user.");
 
             return savedUser.Id;
+        }
+
+        public Task<string> HandleAsync(Command<AuthenticateUser> command)
+        {
+            var props = command.Properties;
+
+            
         }
     }
 }

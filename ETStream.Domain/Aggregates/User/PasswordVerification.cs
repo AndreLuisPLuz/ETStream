@@ -1,8 +1,8 @@
 namespace ETStream.Domain.Aggregates.User
 {
-    public abstract record PasswordVerification()
+    public abstract record AuthenticationResult()
     {
-        public record Failed() : PasswordVerification;
-        public record Succeeded(Guid UserId) : PasswordVerification; 
+        public record Failed() : AuthenticationResult;
+        public record Succeeded(Guid UserId) : AuthenticationResult; 
     }
 }

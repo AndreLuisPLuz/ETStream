@@ -60,9 +60,15 @@ namespace ETStream.Domain.Aggregates.User
             return new UserEntity(username, email, password, schooId, id);
         }
 
-        public PasswordVerification VerifyPassword(string password)
+        public AuthenticationResult AuthenticateAgainst(string username, string password)
         {
-            return _password.VerifyAgainst(this, password);
+            bool usernameMatches = _username.Value.Equals(username);
+            bool passwordMatches = _password.MatchesAgainst(this, password);
+
+            if (usernameMatches && passwordMatches)
+                return new AuthenticationResult.Succeeded(Id);
+            
+            return new AuthenticationResult.Failed();
         }
     }
 }
