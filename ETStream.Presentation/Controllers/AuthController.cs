@@ -10,6 +10,7 @@ namespace ETStream.Presentation.Controllers
     public class AuthController : Controller
     {
         [HttpPost]
+        [Route("register")]
         public async Task<IActionResult> RegisterUser(
                 [FromServices] UserCommandHandler userCommandHandler,
                 [FromServices] UserQueryHandler userQueryHandler,

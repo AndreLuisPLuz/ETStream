@@ -49,6 +49,9 @@ namespace ETStream.Presentation
             services.AddScoped<SchoolCommandHandler>();
             services.AddScoped<UserCommandHandler>();
 
+            services.AddScoped<SchoolQueryHandler>();
+            services.AddScoped<UserQueryHandler>();
+
             services.AddControllers();
 
             services.AddEndpointsApiExplorer();

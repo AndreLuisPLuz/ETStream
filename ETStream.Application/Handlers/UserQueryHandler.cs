@@ -30,10 +30,12 @@ namespace ETStream.Application.Handlers
             
             return new UserDetails
             {
+                Id = user.Id,
                 Email = user.Email,
                 Username = user.Username,
                 School = new SchoolDetails
                 {
+                    Id = school.Id,
                     Description = school.Description,
                 }
             };

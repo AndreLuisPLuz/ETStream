@@ -22,6 +22,7 @@ namespace ETStream.Application.Handlers
             
             return new SchoolDetails
             {
+                Id = school.Id,
                 Description = school.Description
             };
         }

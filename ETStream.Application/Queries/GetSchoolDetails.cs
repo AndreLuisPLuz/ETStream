@@ -9,7 +9,8 @@ namespace ETStream.Application.Queries
 
     public readonly record struct SchoolDetails
     {
-        public readonly string Description { get; init; }
+        public required readonly Guid Id { get; init; }
+        public required readonly string Description { get; init; }
     }
 
     public class GetSchoolDetails : Query<GetSchoolDetailsProps, SchoolDetails>
