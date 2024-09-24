@@ -4,11 +4,8 @@ namespace ETStream.Domain.Aggregates.User
 {
     public class UserEntity : Entity
     {
-        private Name _username;
-        private PasswordValue _password;
-
-        public string Username => _username.Value;
-        public string Password => _password.Value;
+        public Name Username { get; set; }
+        public PasswordValue Password { get; set; }
         public string Email { get; private set; }
         
         public Guid SchoolId { get; private set; }
@@ -24,15 +21,15 @@ namespace ETStream.Domain.Aggregates.User
         {
             Email = email;
             SchoolId = schoolId;
-            _username = Name.Create(username);
+            Username = Name.Create(username);
 
             if (id is null)
             {
-                _password = PasswordValue.CreateForUser(this, password);
+                Password = PasswordValue.CreateForUser(this, password);
             }
             else
             {
-                _password = PasswordValue.LoadForUser(this, password);
+                Password = PasswordValue.Load(password);
             }
         }
 
@@ -57,7 +54,7 @@ namespace ETStream.Domain.Aggregates.User
 
         public PasswordVerification VerifyPassword(string password)
         {
-            return _password.VerifyAgainst(password);
+            return Password.VerifyAgainst(this, password);
         }
     }
 }
