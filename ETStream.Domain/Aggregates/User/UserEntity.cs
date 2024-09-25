@@ -62,13 +62,13 @@ namespace ETStream.Domain.Aggregates.User
 
         public AuthenticationResult AuthenticateAgainst(string username, string password)
         {
-            bool usernameMatches = _username.Value.Equals(username);
+            bool usernameMatches = _username.Value.Equals(username) || Email.Equals(username);
             bool passwordMatches = _password.MatchesAgainst(this, password);
 
             if (usernameMatches && passwordMatches)
                 return new AuthenticationResult.Succeeded(Id);
             
-            return new AuthenticationResult.Failed();
+            return new AuthenticationResult.Failed(usernameMatches, passwordMatches);
         }
     }
 }

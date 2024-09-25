@@ -1,3 +1,4 @@
+using ETStream.Application.CrossCutting;
 using ETStream.Application.Handlers;
 using ETStream.Domain.Aggregates.School;
 using ETStream.Domain.Aggregates.User;
@@ -38,7 +39,13 @@ namespace ETStream.Presentation
         private static void ConfigureServices(IServiceCollection services, IConfigurationManager configuration)
         {
             var connectionString = configuration.GetConnectionString("SqlServer");
-            Console.WriteLine(connectionString);
+            var jwtSettings = new JwtSettings()
+            {
+                SecretKey = configuration.GetSection("JwtSettings").GetValue<string>("SecretKey")!
+            };
+
+            services.AddSingleton(jwtSettings);
+
             services.AddDbContext<ETStreamContext>(
                 options => options.UseSqlServer(connectionString)
             );

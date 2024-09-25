@@ -10,7 +10,7 @@ namespace ETStream.Application.Handlers
 {
     public class UserCommandHandler :
             ICommandHandler<Guid?, CreateUserProperties>,
-            ICommandHandler<string, AuthenticateUser>
+            ICommandHandler<string, AuthenticateUserProperties>
     {
         private readonly IUserRepository _repo;
         private readonly IRepository<SchoolEntity> _schoolRepo;
@@ -44,11 +44,20 @@ namespace ETStream.Application.Handlers
             return savedUser.Id;
         }
 
-        public Task<string> HandleAsync(Command<AuthenticateUser> command)
+        public async Task<string> HandleAsync(Command<AuthenticateUserProperties> command)
         {
             var props = command.Properties;
 
+            var user = await _repo.FindByEmailOrUsernameAsync(props.Username)
+                    ?? throw new NotFoundException("Matching user not found.");
             
+            var authResult = user.AuthenticateAgainst(props.Username, props.Password);
+
+            return authResult switch
+            {
+                AuthenticationResult.Succeeded => "JWT",// Something that generates a JWT...
+                AuthenticationResult.Failed f => throw new AuthenticationException("Unable to authenticate.", f),
+            };
         }
     }
 }

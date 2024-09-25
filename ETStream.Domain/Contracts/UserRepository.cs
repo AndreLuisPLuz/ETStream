@@ -3,8 +3,8 @@ using ETStream.Domain.Seed;
 
 namespace ETStream.Domain.Contracts
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<UserEntity>
     {
-        Task<UserEntity?> FindByEmailAsync(string email);
+        Task<UserEntity?> FindByEmailOrUsernameAsync(string email);
     }
 }

@@ -11,9 +11,9 @@ namespace ETStream.Infrastructure.Repositories
     {
         public UserSqlServerRepository(ETStreamContext context) : base(context) { }
 
-        public async Task<UserEntity?> FindByEmailAsync(string email)
+        public async Task<UserEntity?> FindByEmailOrUsernameAsync(string email)
         {
-            return await _rootSet.SingleOrDefaultAsync(u => u.Email.Equals(email));
+            return await _rootSet.SingleOrDefaultAsync(u => u.Email.Equals(email) || u.Username.Equals(email));
         }
     }
 }
