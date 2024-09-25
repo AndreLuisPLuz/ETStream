@@ -1,7 +1,9 @@
+using System.IdentityModel.Tokens.Jwt;
 using ETStream.Application.CrossCutting;
 using ETStream.Application.Handlers;
 using ETStream.Domain.Aggregates.School;
 using ETStream.Domain.Aggregates.User;
+using ETStream.Domain.Contracts;
 using ETStream.Domain.Seed;
 using ETStream.Infrastructure.Repositories;
 using ETStream.Infrastructure.Sources;
@@ -45,12 +47,14 @@ namespace ETStream.Presentation
             };
 
             services.AddSingleton(jwtSettings);
+            services.AddSingleton<JwtSecurityTokenHandler>();
+            services.AddScoped<JwtService>();
 
             services.AddDbContext<ETStreamContext>(
                 options => options.UseSqlServer(connectionString)
             );
 
-            services.AddScoped<IRepository<UserEntity>, SqlServerRepository<UserEntity>>();
+            services.AddScoped<IUserRepository, UserSqlServerRepository>();
             services.AddScoped<IRepository<SchoolEntity>, SqlServerRepository<SchoolEntity>>();
 
             services.AddScoped<SchoolCommandHandler>();

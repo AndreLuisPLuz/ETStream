@@ -1,4 +1,3 @@
-using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -12,7 +11,7 @@ namespace ETStream.Application.CrossCutting
         private readonly JwtSettings _jwtSetings;
         private readonly JwtSecurityTokenHandler _tokenHandler;
 
-        protected JwtService(
+        public JwtService(
                 JwtSettings jwtSettings,
                 JwtSecurityTokenHandler tokenHandler)
         {

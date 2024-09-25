@@ -24,5 +24,14 @@ namespace ETStream.Presentation.Controllers
 
             return Json(result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AuthenticateUser(
+                [FromServices] UserCommandHandler userCommandHandler,
+                [FromBody] AuthenticateUserProperties payload)
+        {
+            var token = await userCommandHandler.HandleAsync(new AuthenticateUser(payload));
+            return Json(token);
+        }
     }
 }

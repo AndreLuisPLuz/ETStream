@@ -1,4 +1,5 @@
 using ETStream.Application.Commands;
+using ETStream.Application.CrossCutting;
 using ETStream.Application.Errors;
 using ETStream.Application.Seed;
 using ETStream.Domain.Aggregates.School;
@@ -14,13 +15,16 @@ namespace ETStream.Application.Handlers
     {
         private readonly IUserRepository _repo;
         private readonly IRepository<SchoolEntity> _schoolRepo;
+        private readonly JwtService _jwtService;
 
         public UserCommandHandler(
                 IUserRepository repository,
-                IRepository<SchoolEntity> schoolRepository)
+                IRepository<SchoolEntity> schoolRepository,
+                JwtService jwtService)
         {
             _repo = repository;
             _schoolRepo = schoolRepository;
+            _jwtService = jwtService;
         }
 
         public async Task<Guid?> HandleAsync(Command<CreateUserProperties> command)
@@ -55,8 +59,9 @@ namespace ETStream.Application.Handlers
 
             return authResult switch
             {
-                AuthenticationResult.Succeeded => "JWT",// Something that generates a JWT...
+                AuthenticationResult.Succeeded s => _jwtService.GenerateToken(s),
                 AuthenticationResult.Failed f => throw new AuthenticationException("Unable to authenticate.", f),
+                _ => throw new Exception("Unknown error when generating JWT.")
             };
         }
     }

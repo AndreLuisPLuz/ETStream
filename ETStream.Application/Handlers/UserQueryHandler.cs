@@ -3,17 +3,18 @@ using ETStream.Application.Queries;
 using ETStream.Application.Seed;
 using ETStream.Domain.Aggregates.School;
 using ETStream.Domain.Aggregates.User;
+using ETStream.Domain.Contracts;
 using ETStream.Domain.Seed;
 
 namespace ETStream.Application.Handlers
 {
     public class UserQueryHandler : IQueryHandler<UserDetails, GetUserDetailsProps>
     {
-        private readonly IRepository<UserEntity> _repository;
+        private readonly IUserRepository _repository;
         private readonly IRepository<SchoolEntity> _schoolRepository;
 
         public UserQueryHandler(
-                IRepository<UserEntity> repository,
+                IUserRepository repository,
                 IRepository<SchoolEntity> schoolRepository)
         {
             _repository = repository;

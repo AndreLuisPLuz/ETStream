@@ -4,6 +4,7 @@ using ETStream.Infrastructure.Sources;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ETStream.Infrastructure.Migrations
 {
     [DbContext(typeof(ETStreamContext))]
-    partial class ETStreamContextModelSnapshot : ModelSnapshot
+    [Migration("20240925144509_UserModifications")]
+    partial class UserModifications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
