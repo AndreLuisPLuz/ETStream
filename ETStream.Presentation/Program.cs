@@ -2,12 +2,11 @@ using System.IdentityModel.Tokens.Jwt;
 using ETStream.Application.CrossCutting;
 using ETStream.Application.Handlers;
 using ETStream.Domain.Aggregates.School;
-using ETStream.Domain.Aggregates.User;
 using ETStream.Domain.Contracts;
 using ETStream.Domain.Seed;
 using ETStream.Infrastructure.Repositories;
 using ETStream.Infrastructure.Sources;
-using Microsoft.AspNetCore.Mvc;
+using ETStream.Presentation.Middlewares;
 using Microsoft.EntityFrameworkCore;
 
 namespace ETStream.Presentation
@@ -17,7 +16,6 @@ namespace ETStream.Presentation
         static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            // builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
             ConfigureServices(builder.Services, builder.Configuration);
 
@@ -30,6 +28,10 @@ namespace ETStream.Presentation
             }
 
             app.UseHttpsRedirection();
+
+            app.UseExceptionHandler();
+
+            app.UseMiddleware<AuthMiddleware>();
 
             app.UseAuthorization();
 
@@ -62,6 +64,11 @@ namespace ETStream.Presentation
 
             services.AddScoped<SchoolQueryHandler>();
             services.AddScoped<UserQueryHandler>();
+
+            services.AddTransient<AuthMiddleware>();
+
+            services.AddExceptionHandler<ErrorHandlingMiddleware>();
+            services.AddProblemDetails();
 
             services.AddControllers();
 
